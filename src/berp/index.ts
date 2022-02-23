@@ -8,27 +8,21 @@ import {
   Request,
 } from './http'
 import { logLogo } from '../utils'
-import { AttemptProtocolCompiler } from './utils'
 import { NetworkManager } from './network'
 import { AuthHandler } from './auth'
-import { PluginManager } from './plugin/PluginManager'
 import { resolve } from 'path'
 import * as Constants from '../Constants'
-import { CommandManager } from './command/CommandManager'
 export class BeRP {
   private _console: BerpConsole
   private _commandHandler: CommandHandler
   private _networkManager: NetworkManager
   private _authProvider: AuthHandler
   private _sequentialBucket: SequentialBucket
-  private _commandManager: CommandManager
-  private _pluginManager: PluginManager
   private _logger = new Logger('BeRP', '#6990ff')
   constructor() {
     logLogo()
 
     this._logger.info("Preparing Modules...")
-    AttemptProtocolCompiler()
 
     this._networkManager = new NetworkManager(this)
     this._sequentialBucket = new SequentialBucket(5, new Logger("Sequential Bucket", "#8769ff"))
@@ -38,8 +32,6 @@ export class BeRP {
       cacheDir: resolve(process.cwd(), 'msal-cache'),
     })
     this._authProvider.createApp(this._authProvider.createConfig())
-    this._commandManager = new CommandManager(this)
-    this._pluginManager = new PluginManager(this)
     this._console = new BerpConsole()
     this._commandHandler = new CommandHandler(this)
   }
@@ -49,7 +41,6 @@ export class BeRP {
   public getNetworkManager(): NetworkManager { return this._networkManager }
   public getAuthProvider(): AuthHandler { return this._authProvider }
   public getSequentialBucket(): SequentialBucket { return this._sequentialBucket }
-  public getCommandManager(): CommandManager { return this._commandManager }
-  public getPluginManager(): PluginManager { return this._pluginManager }
+
   public Request = Request
 }

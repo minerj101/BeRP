@@ -1,11 +1,8 @@
-import {
-  RealmAPIJoinInfo,
-  RealmAPIWorldsRes,
-} from "../../types/berp"
-import { BaseCommand } from "./base/BaseCommand"
-import { BeRP } from "../../berp"
-import * as C from '../../Constants'
-import { createXBLToken } from '../../berp/utils'
+import { BeRP } from '../../berp';
+import { createXBLToken } from '../../berp/utils';
+import * as C from '../../Constants';
+import { RealmAPIJoinInfo, RealmAPIWorldsRes } from '../../types/berp';
+import { BaseCommand } from './base/BaseCommand';
 
 export class Connect extends BaseCommand {
   private _berp: BeRP
@@ -38,19 +35,18 @@ export class Connect extends BaseCommand {
               return this._berp.getNetworkManager().getLogger()
                 .error(`Failed to select account "${username}"`)
             }
-  
+
             const authRes = await this._berp.getAuthProvider().aquireTokenFromCache({
               scopes: C.Scopes,
               account,
             })
             const xsts = await this._berp.getAuthProvider().ezXSTSForRealmAPI(authRes)
-  
+
             let net = this._berp.getNetworkManager().getAccounts()
               .get(account.username)
             if (!net) {
               net = this._berp.getNetworkManager().create(account)
             }
-  
             const curRealms = Array.from(net.getConnections().keys())
 
             const req = new this._berp.Request({
@@ -76,7 +72,7 @@ export class Connect extends BaseCommand {
                           .error(`Failed to select realm`)
                       }
 
-                      // console.log(createXBLToken(xsts))
+                      console.log(createXBLToken(xsts))
 
                       const req = new this._berp.Request({
                         method: "GET",
@@ -91,7 +87,7 @@ export class Connect extends BaseCommand {
                         const split = res.address.split(":")
                         const ip = split[0]
                         const port = parseInt(split[1])
-                        net.newConnection(ip, port, realm)
+                        console.log(ip, port, realm)
                       }
                       req.onFailed = () => {
                         return net.getLogger().error(`Failed to get join info for realm "${realm.name}"`)

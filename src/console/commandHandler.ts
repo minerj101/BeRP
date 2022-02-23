@@ -1,4 +1,4 @@
-import { Logger } from "../console"
+import { Logger } from "./"
 import { Commands } from "./commands"
 import { BaseCommand } from "./commands/base/BaseCommand"
 import { BeRP } from "../berp"
@@ -24,9 +24,9 @@ class CommandHandler {
     if (!args[0]) return
     const commandName = args.shift().toLowerCase()
     const command = this._commands.get(commandName)
-    
+
     if (!command) return console.log(chalk.red(`Invalid commmand "${commandName}" use "help" to see all commands!`))
-    
+
     try {
       command.options.execute(args)
     } catch (error) {
@@ -73,6 +73,6 @@ class CommandHandler {
     console.error(chalk.red(err))
   }
 
-} 
+}
 
 export { CommandHandler }

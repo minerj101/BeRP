@@ -2,8 +2,6 @@ import {
   Method,
 } from 'axios'
 import { ConnectionHandler } from 'src/berp/network'
-import { PluginApi } from 'src/berp/plugin/pluginapi/pluginApi'
-import { Skin } from './packetTypes.i'
 
 export type LoggerColors = (
   "black" |
@@ -23,7 +21,7 @@ export type LoggerColors = (
   "white" |
   "whiteBright" |
   "gray" |
-  "grey" 
+  "grey"
 )
 
 export interface ConsoleCommand {
@@ -201,9 +199,9 @@ export interface Player {
   getName(): string
   getNickname(): string
   getRealmID(): number
-  getUUID(): string 
+  getUUID(): string
   getXuid(): string
-  getEntityID(): bigint 
+  getEntityID(): bigint
   getDevice(): number
   getSkinData(): Skin
   getExecutionName(): string
@@ -258,10 +256,4 @@ export interface ActivePlugin {
     plugin: number
     instance: number
   }
-}
-
-export interface BlockPos {
-  x: number
-  y: number
-  z: number
 }
